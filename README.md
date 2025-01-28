@@ -22,22 +22,22 @@ b. Set this new folder as the working directory.
 Run the docker container using docker compose up --build -d Include a screenshot of your container
 running on localhost:3000, add your student ID and your name as items. (3 marks)
 You can stop your docker container with the docker compose down command.
+
 Part 2 (15 marks)
-Now that you have established a basic containerized application, the next step will be creating a
-database that will allow your data to persist when the container restarts.
-In the docker compose.yaml file create a new service called db that uses the postgres image. Add the
-following configuration to this service, include a screenshot in your submission showing your file.
+
+Now that you have established a basic containerized application, the next step will be creating a database that will allow your data to persist when the container restarts.
+
+In the docker compose.yaml file create a new service called db that uses the postgres image. Add the following configuration to this service, include a screenshot in your submission showing your file.
+
 1. Set the user to postgres (1 mark).
 2. Create a volume called db-data and set the path to var/lib/postgresql/data (1 mark)
-3. Set the POSTGRES_DB environment variable to labonedb and set the POSTGRES_PASSWORD
-variable to your first name followed by your student number. (1 mark)
+3. Set the POSTGRES_DB environment variable to labonedb and set the POSTGRES_PASSWORD variable to your first name followed by your student number. (1 mark)
 4. Expose port 5432 (1 mark)
 5. Set a health check with an interval of 10 seconds a timeout of five seconds and five retries. For
 the test itself use [ "CMD", "pg_isready" ] (2 marks)
+
 Update the server service with the following configuration:
-6. Set environment variables for the POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD,
-and POSTGRES_DB. (1 mark)
+6. Set environment variables for the POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, and POSTGRES_DB. (1 mark)
 7. Add a dependency that is conditional on the db server being healthy. (3 marks)
 Add a new volume to the compose.yaml file called db-data. (1 mark)
-Start your application using docker compose up --build -d. Provide a screenshot showing a list of all
-running docker containers. (4 marks)
+Start your application using docker compose up --build -d. Provide a screenshot showing a list of all running docker containers. (4 marks)
