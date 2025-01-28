@@ -1,6 +1,47 @@
 version: '3'
 services:
-  app:
+  server:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      # Set environment variables for the POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, and POSTGRES_DB
+      
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres 
+      - POSTGRES_PASSWORD=kulwinder100931278
+      - POSTGRES_DB=labonedb
+
+    # Add a dependency that is conditional on the db server being healthy.
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # create a new service called db that uses the postgres image
+  db:
+    image: postgres
+    user: postgres
+    
+    # Create a volume called db-data and set the path to var/lib/postgresql/data
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    
+    # Set the POSTGRES_DB environment variable to labonedb and set the POSTGRES_PASSWORD variable to your first name followed by your student number.  
+    environment:
+      - POSTGRES_DB=labonedb
+      - POSTGRES_PASSWORD=kulwinder100931278
+
+    # Expose port 5432 
+    ports:
+      - "5432:5432"
+
+    # Set a health check with an interval of 10 seconds a timeout of five seconds and five retries. For the test itself use [ "CMD", "pg_isready" ]
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Add a new volume to the compose.yaml file called db-data
+volumes:
+  db-data:
